@@ -11,7 +11,7 @@
     <artifactId>university-web</artifactId>
 
     <properties>
-        <vaadin.version>13.0.4</vaadin.version>
+        <vaadin.version>8.7.0</vaadin.version>
     </properties>
 
     <dependencies>
