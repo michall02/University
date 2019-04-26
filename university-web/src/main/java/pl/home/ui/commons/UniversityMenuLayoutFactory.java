@@ -1,13 +1,17 @@
 package pl.home.ui.commons;
 
-import com.vaadin.data.HasValue;
 import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
 import pl.home.navigators.UniversityNavigator;
-import pl.home.utils.MenuUtils;
+
+import static pl.home.utils.MenuUtils.MENU_ADD_STUDENT;
+import static pl.home.utils.MenuUtils.MENU_OPERATIONS;
+import static pl.home.utils.MenuUtils.MENU_REMOVE_STUDENT;
+import static pl.home.utils.MenuUtils.MENU_STUDENT;
+import static pl.home.utils.MenuUtils.MENU_UNIVERSITY;
 
 @org.springframework.stereotype.Component
 public class UniversityMenuLayoutFactory implements UIComponentBuilder {
@@ -28,15 +32,15 @@ public class UniversityMenuLayoutFactory implements UIComponentBuilder {
             setWidth("100%");
             setHeightUndefined();
 
-            treeData.addItem(null, MenuUtils.MENU_UNIVERSITY.getValue());
-            treeData.addItem(null, MenuUtils.MENU_STUDENT.getValue());
-            treeData.addItem(MenuUtils.MENU_UNIVERSITY.getValue(), MenuUtils.MENU_OPERATIONS.getValue());
-            treeData.addItem(MenuUtils.MENU_STUDENT.getValue(), MenuUtils.MENU_ADD_STUDENT.getValue());
-            treeData.addItem(MenuUtils.MENU_STUDENT.getValue(), MenuUtils.MENU_REMOVE_STUDENT.getValue());
+            treeData.addItem(null, MENU_UNIVERSITY.getValue());
+            treeData.addItem(null, MENU_STUDENT.getValue());
+            treeData.addItem(MENU_UNIVERSITY.getValue(), MENU_OPERATIONS.getValue());
+            treeData.addItem(MENU_STUDENT.getValue(), MENU_ADD_STUDENT.getValue());
+            treeData.addItem(MENU_STUDENT.getValue(), MENU_REMOVE_STUDENT.getValue());
 
             TreeDataProvider<String> stringTreeDataProvider = new TreeDataProvider<>(treeData);
             tree.setDataProvider(stringTreeDataProvider);
-            tree.expand(MenuUtils.MENU_UNIVERSITY.getValue(), MenuUtils.MENU_STUDENT.getValue());
+            tree.expand(MENU_UNIVERSITY.getValue(), MENU_STUDENT.getValue());
 
             addComponent(tree);
             return this;
