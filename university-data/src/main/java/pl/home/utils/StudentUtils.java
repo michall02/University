@@ -14,7 +14,8 @@ public enum StudentUtils {
     AGE("Age"),
     GENDER("Gender"),
     SAVE("Save"),
-    CLEAR("Clear");
+    CLEAR("Clear"),
+    REMOVE_MENU("Remove");
 
     private String value;
 }
