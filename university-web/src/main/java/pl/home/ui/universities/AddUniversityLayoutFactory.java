@@ -8,6 +8,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.home.models.University;
+import pl.home.services.AddUniversityService;
 import pl.home.ui.commons.UIComponentBuilderWithListener;
 import pl.home.ui.students.SavedListener;
 
@@ -74,11 +75,25 @@ public class AddUniversityLayoutFactory implements UIComponentBuilderWithListene
         @Override
         public void buttonClick(Button.ClickEvent clickEvent) {
             binderGroup.writeBeanIfValid(university);
-//            addStudentService.saveStudent(student);
+            addUniversityService.addUniversity(university);
             savedListener.studentSaved();
+
+            clearFields();
+        }
+
+        private void clearFields(){
+            universityName.setValue("");
+            universityCountry.setValue("");
+            universityCity.setValue("");
         }
 
 
+    }
+
+    private final AddUniversityService addUniversityService;
+
+    public AddUniversityLayoutFactory(AddUniversityService addUniversityService) {
+        this.addUniversityService = addUniversityService;
     }
 
     public Component createComponent(SavedListener savedListener){
