@@ -41,9 +41,9 @@ public class AddStudentMainLayoutFactory implements UIComponentBuilderWithListen
         private Binder<Student> binderGroup;
         private Student student;
 
-        private StudentSavedListener savedListener;
+        private SavedListener savedListener;
 
-        public AddStudentMainLayout(StudentSavedListener savedListener) {
+        public AddStudentMainLayout(SavedListener savedListener) {
             this.savedListener = savedListener;
         }
 
@@ -122,7 +122,7 @@ public class AddStudentMainLayoutFactory implements UIComponentBuilderWithListen
         this.addStudentService = addStudentService;
     }
 
-    public Component createComponent(StudentSavedListener savedListener) {
+    public Component createComponent(SavedListener savedListener) {
         return new AddStudentMainLayout(savedListener).init().bind().layout();
     }
 }
