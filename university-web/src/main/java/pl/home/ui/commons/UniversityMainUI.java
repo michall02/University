@@ -13,7 +13,7 @@ import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import pl.home.navigators.UniversityNavigator;
-import pl.home.ui.students.StudentLayoutFactory;
+import pl.home.ui.students.LayoutFactory;
 
 
 @SpringUI(path = UniversityMainUI.NAME)
@@ -90,7 +90,7 @@ public class UniversityMainUI extends UI {
         UniversityNavigator navigator = new UniversityNavigator(this,changeTab);
         applicationContext.getAutowireCapableBeanFactory().autowireBean(navigator);
         navigator.addProvider(viewProvider);
-        navigator.navigateTo(StudentLayoutFactory.NAME);
+        navigator.navigateTo(LayoutFactory.NAME);
 
     }
 }

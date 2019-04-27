@@ -1,5 +1,5 @@
 package pl.home.ui.students;
 
-public interface StudentSavedListener {
+public interface SavedListener {
     void studentSaved();
 }

@@ -67,11 +67,6 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
 
         addComponent(tabSheet);
 
-
-
-//        addComponent(removeStudentTable);
-//        addComponent(removeStudentBtn);
-
     }
 
     private void loadStudents() {

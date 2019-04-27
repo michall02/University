@@ -14,8 +14,8 @@ import pl.home.ui.commons.UniversityMainUI;
 import static pl.home.utils.StudentUtils.MAIN_MENU;
 import static pl.home.utils.StudentUtils.SHOW_ALL_STUDENTS;
 
-@SpringView(name = StudentLayoutFactory.NAME, ui = UniversityMainUI.class)
-public class StudentLayoutFactory extends VerticalLayout implements View, StudentSavedListener {
+@SpringView(name = LayoutFactory.NAME, ui = UniversityMainUI.class)
+public class LayoutFactory extends VerticalLayout implements View, SavedListener {
     public static final String NAME = "addstudent";
 
     private TabSheet tabSheet;
@@ -25,8 +25,8 @@ public class StudentLayoutFactory extends VerticalLayout implements View, Studen
     private final UITableRefresher showAllStudentsRefreshTable;
 
 
-    public StudentLayoutFactory(UIComponentBuilderWithListener addStudentComponentBuilder,
-                                @Qualifier("showAllStudentsLayoutFactory") UIComponentBuilder showAllStudentsComponentBuilder, UITableRefresher showAllStudentsRefreshTable) {
+    public LayoutFactory(@Qualifier("addStudentMainLayoutFactory") UIComponentBuilderWithListener addStudentComponentBuilder,
+                         @Qualifier("showAllStudentsLayoutFactory") UIComponentBuilder showAllStudentsComponentBuilder, UITableRefresher showAllStudentsRefreshTable) {
         this.addStudentComponentBuilder = addStudentComponentBuilder;
         this.showAllStudentsComponentBuilder = showAllStudentsComponentBuilder;
         this.showAllStudentsRefreshTable = showAllStudentsRefreshTable;
