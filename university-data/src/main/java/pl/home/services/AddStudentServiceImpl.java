@@ -1,20 +1,20 @@
 package pl.home.services;
 
+import com.vaadin.ui.Notification;
 import org.springframework.stereotype.Service;
 import pl.home.models.Student;
 import pl.home.repositories.StudentRepository;
 import pl.home.utils.NotificationMessages;
 
-import com.vaadin.ui.Notification;
-
 import javax.validation.ConstraintViolationException;
+import java.util.List;
 
 @Service
-public class StudentServiceImpl implements StudentService {
+public class AddStudentServiceImpl implements AddStudentService {
 
     private final StudentRepository repository;
 
-    public StudentServiceImpl(StudentRepository repository) {
+    public AddStudentServiceImpl(StudentRepository repository) {
         this.repository = repository;
     }
 

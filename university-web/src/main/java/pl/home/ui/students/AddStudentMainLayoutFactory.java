@@ -6,14 +6,12 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 import pl.home.models.Student;
-import pl.home.services.StudentService;
-import pl.home.ui.commons.UIComponentBuilder;
-import pl.home.utils.NotificationMessages;
+import pl.home.services.AddStudentService;
+import pl.home.ui.commons.UIComponentBuilderWithListener;
 
 import javax.validation.ConstraintViolationException;
 
@@ -29,7 +27,7 @@ import static pl.home.utils.StudentUtils.SAVE;
 
 
 @org.springframework.stereotype.Component
-public class AddStudentMainLayoutFactory implements UIComponentBuilder {
+public class AddStudentMainLayoutFactory implements UIComponentBuilderWithListener {
 
 
     private class AddStudentMainLayout extends VerticalLayout implements Button.ClickListener {
@@ -42,6 +40,12 @@ public class AddStudentMainLayoutFactory implements UIComponentBuilder {
 
         private Binder<Student> binderGroup;
         private Student student;
+
+        private StudentSavedListener savedListener;
+
+        public AddStudentMainLayout(StudentSavedListener savedListener) {
+            this.savedListener = savedListener;
+        }
 
         public AddStudentMainLayout init() {
             binderGroup = new Binder<>(Student.class);
@@ -99,7 +103,8 @@ public class AddStudentMainLayoutFactory implements UIComponentBuilder {
 
         private void save() throws ConstraintViolationException {
             binderGroup.writeBeanIfValid(student);
-            studentService.saveStudent(student);
+            addStudentService.saveStudent(student);
+            savedListener.studentSaved();
             clearField();
         }
 
@@ -111,13 +116,13 @@ public class AddStudentMainLayoutFactory implements UIComponentBuilder {
         }
     }
 
-    private final StudentService studentService;
+    private final AddStudentService addStudentService;
 
-    public AddStudentMainLayoutFactory(StudentService studentService) {
-        this.studentService = studentService;
+    public AddStudentMainLayoutFactory(AddStudentService addStudentService) {
+        this.addStudentService = addStudentService;
     }
 
-    public Component createComponent() {
-        return new AddStudentMainLayout().init().bind().layout();
+    public Component createComponent(StudentSavedListener savedListener) {
+        return new AddStudentMainLayout(savedListener).init().bind().layout();
     }
 }
