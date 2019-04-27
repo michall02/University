@@ -5,8 +5,11 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
 import com.vaadin.ui.themes.ValoTheme;
@@ -14,6 +17,7 @@ import pl.home.models.Student;
 import pl.home.services.RemoveStudentService;
 import pl.home.services.ShowAllStudentsService;
 import pl.home.ui.commons.UniversityMainUI;
+import pl.home.utils.StudentUtils;
 
 import java.util.List;
 
@@ -29,6 +33,8 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
     private List<Student> students;
     private ListDataProvider<Student> listProvider;
 
+    private TabSheet tabSheet;
+
     private final ShowAllStudentsService showAllStudentsService;
     private final RemoveStudentService removeStudentService;
 
@@ -39,6 +45,11 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
 
     public void addLayout(){
         setMargin(true);
+        tabSheet = new TabSheet();
+        tabSheet.setWidth("100%");
+        VerticalLayout removeTab = new VerticalLayout();
+        removeTab.setMargin(true);
+
         removeStudentBtn = new Button("Remove");
         removeStudentBtn.setStyleName(ValoTheme.BUTTON_DANGER);
         listProvider = new ListDataProvider<>(students);
@@ -49,8 +60,17 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
         removeStudentTable.setSelectionMode(Grid.SelectionMode.MULTI);
 
         removeStudentBtn.addClickListener(this);
-        addComponent(removeStudentTable);
-        addComponent(removeStudentBtn);
+
+        removeTab.addComponents(removeStudentTable, removeStudentBtn);
+
+        tabSheet.addTab(removeTab, StudentUtils.REMOVE_MENU.getValue());
+
+        addComponent(tabSheet);
+
+
+
+//        addComponent(removeStudentTable);
+//        addComponent(removeStudentBtn);
 
     }
 
