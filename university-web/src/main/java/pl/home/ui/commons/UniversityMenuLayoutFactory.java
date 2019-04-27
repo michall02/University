@@ -49,9 +49,11 @@ public class UniversityMenuLayoutFactory implements UIComponentBuilder {
         @Override
         public void itemClick(Tree.ItemClick itemClick) {
             String selectedItemPath = (String) itemClick.getItem();
-            if(selectedItemPath == null){ return; }
+            if (selectedItemPath == null) {
+                return;
+            }
 
-            String path = selectedItemPath.toLowerCase().replaceAll(" ","");
+            String path = selectedItemPath.toLowerCase().replaceAll(" ", "");
             UniversityNavigator.navigate(path);
         }
     }

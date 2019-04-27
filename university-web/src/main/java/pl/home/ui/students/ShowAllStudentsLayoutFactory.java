@@ -5,17 +5,13 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
 import pl.home.models.Student;
+import pl.home.services.ShowAllStudentsService;
 import pl.home.ui.commons.UIComponentBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ShowAllStudentsLayoutFactory implements UIComponentBuilder {
-
-    //List<Book> data = new Arraylist<>(getBooks());
-    //ListDataProvider<Book> dataProvider = new ListDataProvider<>(data);
-    //Grid<Book> grid = new Grid<>();
-    //grid.setDataProvider(dataProvider);
+@org.springframework.stereotype.Component
+public class ShowAllStudentsLayoutFactory implements UIComponentBuilder, UITableRefresher {
 
     private List<Student> students;
     private ListDataProvider<Student> listProvider;
@@ -25,18 +21,17 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder {
 
         public ShowAllStudentsLayout init(){
             setMargin(true);
-            students = new ArrayList<>();
             listProvider = new ListDataProvider<>(students);
-            studentTable = new Grid<>();
+            studentTable = new Grid<>(Student.class);
             studentTable.setDataProvider(listProvider);
-            studentTable.setColumnOrder("firstName", "lastName", "age", "gender");
-            studentTable.removeColumn("id");
+            studentTable.setColumns("firstName", "lastName", "age", "gender");
+
 
             return this;
         }
 
         public ShowAllStudentsLayout load(){
-
+            students = showAllStudentsService.getAllStudent();
             return this;
         }
 
@@ -46,10 +41,23 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder {
         }
     }
 
+    @Override
+    public void refreshTable() {
+        students = showAllStudentsService.getAllStudent();
+        listProvider.getItems().removeAll(students);
+        listProvider.getItems().addAll(students);
+    }
 
+    private final ShowAllStudentsService showAllStudentsService;
+
+    public ShowAllStudentsLayoutFactory(ShowAllStudentsService showAllStudentsService) {
+        this.showAllStudentsService = showAllStudentsService;
+    }
 
     @Override
     public Component createComponent() {
-        return new ShowAllStudentsLayout().init().load().layout();
+        return new ShowAllStudentsLayout().load().init().layout();
     }
+
+
 }
