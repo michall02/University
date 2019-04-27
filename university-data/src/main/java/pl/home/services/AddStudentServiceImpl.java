@@ -4,10 +4,13 @@ import com.vaadin.ui.Notification;
 import org.springframework.stereotype.Service;
 import pl.home.models.Student;
 import pl.home.repositories.StudentRepository;
-import pl.home.utils.NotificationMessages;
 
 import javax.validation.ConstraintViolationException;
-import java.util.List;
+
+import static pl.home.utils.NotificationMessages.STUDENT_SAVE_VALIDATION_ACCEPTED_DESCRIPTION;
+import static pl.home.utils.NotificationMessages.STUDENT_SAVE_VALIDATION_ACCEPTED_TITLE;
+import static pl.home.utils.NotificationMessages.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION;
+import static pl.home.utils.NotificationMessages.STUDENT_SAVE_VALIDATION_ERROR_TITLE;
 
 @Service
 public class AddStudentServiceImpl implements AddStudentService {
@@ -30,13 +33,13 @@ public class AddStudentServiceImpl implements AddStudentService {
         try{
             repository.save(student);
 
-            Notification.show(NotificationMessages.STUDENT_SAVE_VALIDATION_ACCEPTED_TITLE.getValue(),
-                    NotificationMessages.STUDENT_SAVE_VALIDATION_ACCEPTED_DESCRIPTION.getValue(),
+            Notification.show(STUDENT_SAVE_VALIDATION_ACCEPTED_TITLE.getValue(),
+                    STUDENT_SAVE_VALIDATION_ACCEPTED_DESCRIPTION.getValue(),
                     Notification.Type.HUMANIZED_MESSAGE);
 
         }catch(ConstraintViolationException e) {
-            Notification.show(NotificationMessages.STUDENT_SAVE_VALIDATION_ERROR_TITLE.getValue(),
-                    NotificationMessages.STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getValue(),
+            Notification.show(STUDENT_SAVE_VALIDATION_ERROR_TITLE.getValue(),
+                    STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getValue(),
                     Notification.Type.ERROR_MESSAGE);
 
         }
