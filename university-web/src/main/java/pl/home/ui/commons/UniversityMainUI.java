@@ -29,7 +29,8 @@ public class UniversityMainUI extends UI {
     private Panel changeTab = new Panel();
 
     public UniversityMainUI(@Qualifier("universityLogoLayoutFactory") UIComponentBuilder logoComponentBuilder,
-                            @Qualifier("universityMenuLayoutFactory") UIComponentBuilder menuComponentBuilder, ApplicationContext applicationContext, SpringViewProvider viewProvider) {
+                            @Qualifier("universityMenuLayoutFactory") UIComponentBuilder menuComponentBuilder,
+                            ApplicationContext applicationContext, SpringViewProvider viewProvider) {
         this.logoComponentBuilder = logoComponentBuilder;
         this.menuComponentBuilder = menuComponentBuilder;
         this.applicationContext = applicationContext;
