@@ -30,6 +30,7 @@ public class AddUniversityServiceImpl implements AddUniversityService {
 
         try{
             repository.save(university);
+
             Notification.show(UNIVERSITY_SAVE_VALIDATION_ACCEPTED_TITLE.getValue(),
                     UNIVERSITY_SAVE_VALIDATION_ACCEPTED_DESCRIPTION.getValue(),
                     Notification.Type.HUMANIZED_MESSAGE);

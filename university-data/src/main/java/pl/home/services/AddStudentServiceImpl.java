@@ -29,15 +29,14 @@ public class AddStudentServiceImpl implements AddStudentService {
         student.setAge(studentDAO.getAge());
         student.setGender(studentDAO.getGender());
 
-
-        try{
+        try {
             repository.save(student);
 
             Notification.show(STUDENT_SAVE_VALIDATION_ACCEPTED_TITLE.getValue(),
                     STUDENT_SAVE_VALIDATION_ACCEPTED_DESCRIPTION.getValue(),
                     Notification.Type.HUMANIZED_MESSAGE);
 
-        }catch(ConstraintViolationException e) {
+        } catch (ConstraintViolationException e) {
             Notification.show(STUDENT_SAVE_VALIDATION_ERROR_TITLE.getValue(),
                     STUDENT_SAVE_VALIDATION_ERROR_DESCRIPTION.getValue(),
                     Notification.Type.ERROR_MESSAGE);
