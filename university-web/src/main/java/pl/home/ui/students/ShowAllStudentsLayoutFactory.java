@@ -21,11 +21,11 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder, UITable
 
         public ShowAllStudentsLayout init(){
             setMargin(true);
+
             listProvider = new ListDataProvider<>(students);
             studentTable = new Grid<>(Student.class);
             studentTable.setDataProvider(listProvider);
             studentTable.setColumns("firstName", "lastName", "age", "gender");
-
 
             return this;
         }

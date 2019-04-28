@@ -28,6 +28,7 @@ public class AddStudentServiceImpl implements AddStudentService {
         student.setLastName(studentDAO.getLastName());
         student.setAge(studentDAO.getAge());
         student.setGender(studentDAO.getGender());
+        student.setUniversity(studentDAO.getUniversity());
 
         try {
             repository.save(student);
