@@ -18,7 +18,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Setter
 @Getter
-@ToString(exclude = "id")
 @Entity
 @Table(name = "university")
 public class University {
@@ -41,4 +40,9 @@ public class University {
     @NotEmpty(message = "You have to enter university city")
     @Column(name = "university_city")
     private String universityCity;
+
+    @Override
+    public String toString() {
+        return this.universityName;
+    }
 }

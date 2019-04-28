@@ -26,7 +26,8 @@ public class LayoutFactory extends VerticalLayout implements View, SavedListener
 
 
     public LayoutFactory(@Qualifier("addStudentMainLayoutFactory") UIComponentBuilderWithListener addStudentComponentBuilder,
-                         @Qualifier("showAllStudentsLayoutFactory") UIComponentBuilder showAllStudentsComponentBuilder, UITableRefresher showAllStudentsRefreshTable) {
+                         @Qualifier("showAllStudentsLayoutFactory") UIComponentBuilder showAllStudentsComponentBuilder,
+                         @Qualifier("showAllStudentsLayoutFactory") UITableRefresher showAllStudentsRefreshTable) {
         this.addStudentComponentBuilder = addStudentComponentBuilder;
         this.showAllStudentsComponentBuilder = showAllStudentsComponentBuilder;
         this.showAllStudentsRefreshTable = showAllStudentsRefreshTable;
@@ -53,7 +54,7 @@ public class LayoutFactory extends VerticalLayout implements View, SavedListener
     }
 
     @Override
-    public void studentSaved() {
+    public void saved() {
         showAllStudentsRefreshTable.refreshTable();
     }
 }

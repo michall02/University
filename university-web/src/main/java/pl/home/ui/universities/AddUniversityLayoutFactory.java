@@ -12,6 +12,8 @@ import pl.home.services.AddUniversityService;
 import pl.home.ui.commons.UIComponentBuilderWithListener;
 import pl.home.ui.students.SavedListener;
 
+import javax.validation.ConstraintViolationException;
+
 import static pl.home.utils.StudentUtils.SAVE;
 import static pl.home.utils.UniversityUtils.UNIVERSITY_CITY;
 import static pl.home.utils.UniversityUtils.UNIVERSITY_COUNTRY;
@@ -45,8 +47,9 @@ public class AddUniversityLayoutFactory implements UIComponentBuilderWithListene
             universityCountry = new TextField(UNIVERSITY_COUNTRY.getValue());
             universityCity = new TextField(UNIVERSITY_CITY.getValue());
 
-            saveBtn = new Button(SAVE.getValue(), this);
+            saveBtn = new Button(SAVE.getValue());
             saveBtn.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+            saveBtn.addClickListener(this);
 
             return this;
         }
@@ -73,10 +76,10 @@ public class AddUniversityLayoutFactory implements UIComponentBuilderWithListene
         }
 
         @Override
-        public void buttonClick(Button.ClickEvent clickEvent) {
+        public void buttonClick(Button.ClickEvent clickEvent) throws ConstraintViolationException {
             binderGroup.writeBeanIfValid(university);
             addUniversityService.addUniversity(university);
-            savedListener.studentSaved();
+            savedListener.saved();
 
             clearFields();
         }
