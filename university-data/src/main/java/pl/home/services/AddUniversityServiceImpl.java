@@ -2,6 +2,7 @@ package pl.home.services;
 
 import com.vaadin.ui.Notification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.home.models.University;
 import pl.home.repositories.UniversityRepository;
 
@@ -22,6 +23,7 @@ public class AddUniversityServiceImpl implements AddUniversityService {
     }
 
     @Override
+    @Transactional
     public void addUniversity(University universityDAO) {
         University university = new University();
         university.setUniversityName(universityDAO.getUniversityName());

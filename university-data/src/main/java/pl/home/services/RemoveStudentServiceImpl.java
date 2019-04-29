@@ -1,6 +1,7 @@
 package pl.home.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.home.models.Student;
 import pl.home.repositories.StudentRepository;
 
@@ -14,6 +15,7 @@ public class RemoveStudentServiceImpl implements RemoveStudentService {
     }
 
     @Override
+    @Transactional
     public void removeStudent(Student student) {
         repository.delete(student);
     }

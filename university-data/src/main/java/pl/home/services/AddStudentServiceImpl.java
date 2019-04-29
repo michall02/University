@@ -2,6 +2,7 @@ package pl.home.services;
 
 import com.vaadin.ui.Notification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.home.models.Student;
 import pl.home.repositories.StudentRepository;
 
@@ -22,6 +23,7 @@ public class AddStudentServiceImpl implements AddStudentService {
     }
 
     @Override
+    @Transactional
     public void saveStudent(Student studentDAO) {
         Student student = new Student();
         student.setFirstName(studentDAO.getFirstName());
