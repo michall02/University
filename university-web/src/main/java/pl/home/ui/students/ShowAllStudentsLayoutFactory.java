@@ -44,7 +44,7 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder, UITable
     @Override
     public void refreshTable() {
         students = showAllStudentsService.getAllStudent();
-        listProvider.getItems().removeAll(students);
+        listProvider.getItems().removeIf(student -> !student.getFirstName().isEmpty());
         listProvider.getItems().addAll(students);
     }
 
