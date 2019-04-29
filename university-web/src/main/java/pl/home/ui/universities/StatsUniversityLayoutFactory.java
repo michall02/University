@@ -8,13 +8,15 @@ import pl.home.models.University;
 import pl.home.services.ShowAllUniversitiesService;
 import pl.home.services.UniversityStatsService;
 import pl.home.ui.commons.UIComponentBuilder;
+import pl.home.ui.students.UITableRefresher;
 
 import java.util.List;
 
 @org.springframework.stereotype.Component
-public class StatsUniversityLayoutFactory implements UIComponentBuilder {
+public class StatsUniversityLayoutFactory implements UIComponentBuilder, UITableRefresher {
 
     private List<University> universities;
+    private StatsUniversityLayout statsUniversityLayout;
 
     private final ShowAllUniversitiesService showAllUniversitiesService;
     private final UniversityStatsService universityStatsService;
@@ -46,12 +48,21 @@ public class StatsUniversityLayoutFactory implements UIComponentBuilder {
             }
             return this;
         }
+    }
 
 
+
+    @Override
+    public void refreshTable() {
+        if(statsUniversityLayout == null){ return; }
+        statsUniversityLayout.removeAllComponents();
+        statsUniversityLayout.load();
+        statsUniversityLayout.layout();
     }
 
     @Override
     public Component createComponent() {
-        return new StatsUniversityLayout().load().layout();
+        statsUniversityLayout = new StatsUniversityLayout();
+        return statsUniversityLayout.load().layout();
     }
 }

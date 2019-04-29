@@ -4,7 +4,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,15 +27,18 @@ public class UniversityLayoutFactory extends VerticalLayout implements View, Sav
     private final UIComponentBuilder showAllUniversitiesComponentBuilder;
     private final UIComponentBuilder statsUniversityComponentBuilder;
     private final UITableRefresher showAllUniversitiesRefreshTable;
+    private final UITableRefresher statsUniversityRefreshTable;
 
     public UniversityLayoutFactory(@Qualifier("addUniversityLayoutFactory") UIComponentBuilderWithListener addUniversityComponentBuilder,
                                    @Qualifier("showAllUniversitiesLayoutFactory") UIComponentBuilder showAllUniversitiesComponentBuilder,
                                    @Qualifier("statsUniversityLayoutFactory") UIComponentBuilder statsUniversityComponentBuilder,
-                                   @Qualifier("showAllUniversitiesLayoutFactory") UITableRefresher showAllUniversitiesRefreshTable) {
+                                   @Qualifier("showAllUniversitiesLayoutFactory") UITableRefresher showAllUniversitiesRefreshTable,
+                                   @Qualifier("statsUniversityLayoutFactory") UITableRefresher statsUniversityRefreshTable) {
         this.addUniversityComponentBuilder = addUniversityComponentBuilder;
         this.showAllUniversitiesComponentBuilder = showAllUniversitiesComponentBuilder;
         this.statsUniversityComponentBuilder = statsUniversityComponentBuilder;
         this.showAllUniversitiesRefreshTable = showAllUniversitiesRefreshTable;
+        this.statsUniversityRefreshTable = statsUniversityRefreshTable;
     }
 
     private void addLayout() {
@@ -66,5 +68,6 @@ public class UniversityLayoutFactory extends VerticalLayout implements View, Sav
     @Override
     public void saved() {
         showAllUniversitiesRefreshTable.refreshTable();
+        statsUniversityRefreshTable.refreshTable();
     }
 }
