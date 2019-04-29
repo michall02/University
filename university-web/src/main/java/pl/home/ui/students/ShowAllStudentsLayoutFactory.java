@@ -21,11 +21,11 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder, UITable
 
         public ShowAllStudentsLayout init(){
             setMargin(true);
+
             listProvider = new ListDataProvider<>(students);
             studentTable = new Grid<>(Student.class);
             studentTable.setDataProvider(listProvider);
             studentTable.setColumns("firstName", "lastName", "age", "gender");
-
 
             return this;
         }
@@ -44,7 +44,7 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder, UITable
     @Override
     public void refreshTable() {
         students = showAllStudentsService.getAllStudent();
-        listProvider.getItems().removeAll(students);
+        listProvider.getItems().removeIf(student -> !student.getFirstName().isEmpty());
         listProvider.getItems().addAll(students);
     }
 

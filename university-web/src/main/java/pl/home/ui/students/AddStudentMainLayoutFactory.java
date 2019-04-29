@@ -121,12 +121,8 @@ public class AddStudentMainLayoutFactory implements UIComponentBuilderWithListen
             }
         }
 
-        private boolean isSaveOperationValide() {
-            return showAllUniversitiesService.getAllUniversities().size() != 0;
-        }
-
         private void save() throws ConstraintViolationException {
-            if (!isSaveOperationValide() || universityComboBox.isEmpty() ) {
+            if (universityComboBox.isEmpty() ) {
                 Notification.show(STUDENT_SAVE_INVALID_TITLE.getValue(),
                         STUDENT_SAVE_INVALID_DESCRIPTION.getValue(),
                         Notification.Type.WARNING_MESSAGE);
