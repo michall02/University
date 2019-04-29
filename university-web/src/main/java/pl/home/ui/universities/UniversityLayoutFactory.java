@@ -26,13 +26,16 @@ public class UniversityLayoutFactory extends VerticalLayout implements View, Sav
 
     private final UIComponentBuilderWithListener addUniversityComponentBuilder;
     private final UIComponentBuilder showAllUniversitiesComponentBuilder;
+    private final UIComponentBuilder statsUniversityComponentBuilder;
     private final UITableRefresher showAllUniversitiesRefreshTable;
 
     public UniversityLayoutFactory(@Qualifier("addUniversityLayoutFactory") UIComponentBuilderWithListener addUniversityComponentBuilder,
                                    @Qualifier("showAllUniversitiesLayoutFactory") UIComponentBuilder showAllUniversitiesComponentBuilder,
+                                   @Qualifier("statsUniversityLayoutFactory") UIComponentBuilder statsUniversityComponentBuilder,
                                    @Qualifier("showAllUniversitiesLayoutFactory") UITableRefresher showAllUniversitiesRefreshTable) {
         this.addUniversityComponentBuilder = addUniversityComponentBuilder;
         this.showAllUniversitiesComponentBuilder = showAllUniversitiesComponentBuilder;
+        this.statsUniversityComponentBuilder = statsUniversityComponentBuilder;
         this.showAllUniversitiesRefreshTable = showAllUniversitiesRefreshTable;
     }
 
@@ -41,7 +44,7 @@ public class UniversityLayoutFactory extends VerticalLayout implements View, Sav
 
         Component addUniversityTab = addUniversityComponentBuilder.createComponent(this);
         Component showAllUniversitiesTab = showAllUniversitiesComponentBuilder.createComponent();
-        Component showStatsTab = new Label("Show stats");
+        Component showStatsTab = statsUniversityComponentBuilder.createComponent();
 
         tabSheet = new TabSheet();
         tabSheet.setWidth("100%");
