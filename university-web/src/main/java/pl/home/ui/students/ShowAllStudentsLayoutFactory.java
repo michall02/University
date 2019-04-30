@@ -1,9 +1,13 @@
 package pl.home.ui.students;
 
 import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.sass.internal.util.StringUtil;
+import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import org.springframework.util.StringUtils;
 import pl.home.models.Student;
 import pl.home.services.ShowAllStudentsService;
 import pl.home.ui.commons.UIComponentBuilder;
@@ -16,6 +20,7 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder, UITable
     private List<Student> students;
     private ListDataProvider<Student> listProvider;
     private Grid<Student> studentTable;
+    private TextField filter;
 
     private class ShowAllStudentsLayout extends VerticalLayout {
 
@@ -27,6 +32,11 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder, UITable
             studentTable.setDataProvider(listProvider);
             studentTable.setColumns("firstName", "lastName", "age", "gender");
 
+            filter = new TextField();
+            filter.setPlaceholder("Filter by last name...");
+            filter.setValueChangeMode(ValueChangeMode.EAGER);
+            filter.addValueChangeListener(e -> updateList());
+
             return this;
         }
 
@@ -36,9 +46,14 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder, UITable
         }
 
         public ShowAllStudentsLayout layout(){
-            addComponent(studentTable);
+            VerticalLayout verticalLayout = new VerticalLayout(filter,studentTable);
+            addComponent(verticalLayout);
             return this;
         }
+    }
+
+    private void updateList() {
+        studentTable.setItems(showAllStudentsService.findByLastNameStartsWithIgnoreCase(filter.getValue()));
     }
 
     @Override

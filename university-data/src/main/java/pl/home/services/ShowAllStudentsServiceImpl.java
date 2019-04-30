@@ -19,4 +19,9 @@ public class ShowAllStudentsServiceImpl implements ShowAllStudentsService {
     public List<Student> getAllStudent() {
         return repository.findAll();
     }
+
+    @Override
+    public List<Student> findByLastNameStartsWithIgnoreCase(String lastName) {
+        return repository.findByLastNameStartsWithIgnoreCase(lastName);
+    }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ShowAllStudentsService {
     List<Student> getAllStudent();
+
+    List<Student> findByLastNameStartsWithIgnoreCase(String lastName);
 }
