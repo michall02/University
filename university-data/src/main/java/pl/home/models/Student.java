@@ -44,7 +44,7 @@ public class Student {
     @Column(name = "gender")
     private String gender;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "university_id")
     private University university;
 
