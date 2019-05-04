@@ -13,6 +13,7 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.components.grid.MultiSelectionModel;
 import com.vaadin.ui.themes.ValoTheme;
+import pl.home.i18helper.I18Helper;
 import pl.home.models.Student;
 import pl.home.services.RemoveStudentService;
 import pl.home.services.ShowAllStudentsService;
@@ -20,6 +21,7 @@ import pl.home.ui.commons.UniversityMainUI;
 import pl.home.utils.StudentUtils;
 
 import java.util.List;
+import java.util.Locale;
 
 import static pl.home.utils.NotificationMessages.STUDENT_REMOVE_SUCCESS_DESCRIPTION;
 import static pl.home.utils.NotificationMessages.STUDENT_REMOVE_SUCCESS_TITLE;
@@ -34,6 +36,9 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
     private ListDataProvider<Student> listProvider;
 
     private TabSheet tabSheet;
+
+    private Locale locale = new Locale("pl");
+    private I18Helper i18Helper = new I18Helper(locale);
 
     private final ShowAllStudentsService showAllStudentsService;
     private final RemoveStudentService removeStudentService;
@@ -50,7 +55,7 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
         VerticalLayout removeTab = new VerticalLayout();
         removeTab.setMargin(true);
 
-        removeStudentBtn = new Button("Remove");
+        removeStudentBtn = new Button(i18Helper.getMessage("button.delete"));
         removeStudentBtn.setStyleName(ValoTheme.BUTTON_DANGER);
         listProvider = new ListDataProvider<>(students);
 
@@ -63,7 +68,7 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
 
         removeTab.addComponents(removeStudentTable, removeStudentBtn);
 
-        tabSheet.addTab(removeTab, StudentUtils.REMOVE_MENU.getValue());
+        tabSheet.addTab(removeTab, i18Helper.getMessage("menu.remove"));
 
         addComponent(tabSheet);
 

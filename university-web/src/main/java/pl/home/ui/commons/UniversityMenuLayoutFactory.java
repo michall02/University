@@ -5,7 +5,10 @@ import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Tree;
 import com.vaadin.ui.VerticalLayout;
+import pl.home.i18helper.I18Helper;
 import pl.home.navigators.UniversityNavigator;
+
+import java.util.Locale;
 
 import static pl.home.utils.MenuUtils.MENU_ADD_STUDENT;
 import static pl.home.utils.MenuUtils.MENU_OPERATIONS;
@@ -18,10 +21,15 @@ public class UniversityMenuLayoutFactory implements UIComponentBuilder {
 
 
     private class UniversityMenu extends VerticalLayout implements Tree.ItemClickListener {
-        Tree<String> tree;
-        TreeData<String> treeData;
+        private Tree<String> tree;
+        private TreeData<String> treeData;
+        private I18Helper i18Helper;
+
+
 
         public UniversityMenu init() {
+            Locale locale = new Locale("pl");
+            i18Helper = new I18Helper(locale);
             tree = new Tree<>();
             treeData = new TreeData<>();
             tree.addItemClickListener(this);
@@ -32,15 +40,15 @@ public class UniversityMenuLayoutFactory implements UIComponentBuilder {
             setWidth("100%");
             setHeightUndefined();
 
-            treeData.addItem(null, MENU_UNIVERSITY.getValue());
-            treeData.addItem(null, MENU_STUDENT.getValue());
-            treeData.addItem(MENU_UNIVERSITY.getValue(), MENU_OPERATIONS.getValue());
-            treeData.addItem(MENU_STUDENT.getValue(), MENU_ADD_STUDENT.getValue());
-            treeData.addItem(MENU_STUDENT.getValue(), MENU_REMOVE_STUDENT.getValue());
+            treeData.addItem(null, i18Helper.getMessage("menu.university"));
+            treeData.addItem(null, i18Helper.getMessage("menu.student"));
+            treeData.addItem(i18Helper.getMessage("menu.university"), i18Helper.getMessage("menu.operations"));
+            treeData.addItem(i18Helper.getMessage("menu.student"), i18Helper.getMessage("menu.addStudent"));
+            treeData.addItem(i18Helper.getMessage("menu.student"), i18Helper.getMessage("menu.removeStudent"));
 
             TreeDataProvider<String> stringTreeDataProvider = new TreeDataProvider<>(treeData);
             tree.setDataProvider(stringTreeDataProvider);
-            tree.expand(MENU_UNIVERSITY.getValue(), MENU_STUDENT.getValue());
+            tree.expand(i18Helper.getMessage("menu.university"), i18Helper.getMessage("menu.student"));
 
             addComponent(tree);
             return this;

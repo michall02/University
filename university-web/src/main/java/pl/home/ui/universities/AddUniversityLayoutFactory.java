@@ -7,6 +7,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import pl.home.i18helper.I18Helper;
 import pl.home.models.University;
 import pl.home.services.AddUniversityService;
 import pl.home.ui.commons.UIComponentBuilderWithListener;
@@ -14,11 +15,7 @@ import pl.home.ui.students.SavedListener;
 
 import javax.validation.ConstraintViolationException;
 
-import static pl.home.utils.StudentUtils.SAVE;
-import static pl.home.utils.UniversityUtils.UNIVERSITY_CITY;
-import static pl.home.utils.UniversityUtils.UNIVERSITY_COUNTRY;
-import static pl.home.utils.UniversityUtils.UNIVERSITY_NAME;
-
+import java.util.Locale;
 
 @org.springframework.stereotype.Component
 public class AddUniversityLayoutFactory implements UIComponentBuilderWithListener {
@@ -33,6 +30,9 @@ public class AddUniversityLayoutFactory implements UIComponentBuilderWithListene
         private University university;
         private Binder<University> binderGroup;
 
+        private I18Helper i18Helper;
+        private Locale locale;
+
         private SavedListener savedListener;
 
         public AddUniversityLayout(SavedListener savedListener) {
@@ -40,14 +40,17 @@ public class AddUniversityLayoutFactory implements UIComponentBuilderWithListene
         }
 
         public AddUniversityLayout init(){
+            locale = new Locale("pl");
+            i18Helper = new I18Helper(locale);
+
             binderGroup = new Binder<>(University.class);
             university = new University();
 
-            universityName = new TextField(UNIVERSITY_NAME.getValue());
-            universityCountry = new TextField(UNIVERSITY_COUNTRY.getValue());
-            universityCity = new TextField(UNIVERSITY_CITY.getValue());
+            universityName = new TextField(i18Helper.getMessage("university.name"));
+            universityCountry = new TextField(i18Helper.getMessage("university.country"));
+            universityCity = new TextField(i18Helper.getMessage("university.city"));
 
-            saveBtn = new Button(SAVE.getValue());
+            saveBtn = new Button(i18Helper.getMessage("button.save"));
             saveBtn.setStyleName(ValoTheme.BUTTON_FRIENDLY);
             saveBtn.addClickListener(this);
 

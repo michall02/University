@@ -1,13 +1,12 @@
 package pl.home.ui.students;
 
 import com.vaadin.data.provider.ListDataProvider;
-import com.vaadin.sass.internal.util.StringUtil;
 import com.vaadin.shared.ui.ValueChangeMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import org.springframework.util.StringUtils;
 import pl.home.models.Student;
 import pl.home.services.ShowAllStudentsService;
 import pl.home.ui.commons.UIComponentBuilder;
@@ -46,8 +45,8 @@ public class ShowAllStudentsLayoutFactory implements UIComponentBuilder, UITable
         }
 
         public ShowAllStudentsLayout layout(){
-            VerticalLayout verticalLayout = new VerticalLayout(filter,studentTable);
-            addComponent(verticalLayout);
+            HorizontalLayout horizontalLayout = new HorizontalLayout(studentTable,filter);
+            addComponent(horizontalLayout);
             return this;
         }
     }
