@@ -1,6 +1,7 @@
 package pl.home.models.security;
 
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,7 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Collection;
 
-
+@NoArgsConstructor
+@Setter
 @Entity
 @Table(name = "user")
 public class User implements UserDetails {

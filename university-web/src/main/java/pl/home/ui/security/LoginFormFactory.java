@@ -6,12 +6,18 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import pl.home.ui.commons.UIComponentBuilder;
 
 @org.springframework.stereotype.Component
@@ -37,7 +43,7 @@ public class LoginFormFactory implements UIComponentBuilder {
             setHeight("100%");
 
             panel = new Panel("Login");
-            panel.setWidthUndefined();
+            panel.setSizeUndefined();
 
             loginBtn = new Button("Login");
             loginBtn.setStyleName(ValoTheme.BUTTON_FRIENDLY);
@@ -45,8 +51,8 @@ public class LoginFormFactory implements UIComponentBuilder {
             signupBtn = new Button("Sign up");
             signupBtn.setStyleName(ValoTheme.BUTTON_PRIMARY);
 
-            username = new TextField();
-            password = new PasswordField();
+            username = new TextField("username");
+            password = new PasswordField("password");
 
             return this;
         }
@@ -62,19 +68,17 @@ public class LoginFormFactory implements UIComponentBuilder {
             loginLayout.setSizeUndefined();
             loginLayout.setMargin(true);
 
-            loginBtn.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-
+            loginBtn.addClickListener((Button.ClickListener) event -> {
+                try{
+                    Authentication auth = new UsernamePasswordAuthenticationToken(username.getValue(), password.getValue());
+                    Authentication authenticated = daoAuthenticationProvider.authenticate(auth);
+                    SecurityContextHolder.getContext().setAuthentication(authenticated);
+                }catch(AuthenticationException e){
+                    Notification.show("Error","Login fail! Try it again", Notification.Type.ERROR_MESSAGE);
                 }
             });
 
-            signupBtn.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-
-                }
-            });
+            signupBtn.addClickListener((Button.ClickListener) event -> UI.getCurrent().getPage().setLocation("/signup"));
 
             panel.setContent(loginLayout);
 
