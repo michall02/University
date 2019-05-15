@@ -5,6 +5,7 @@ Spring Boot web application for managing human resources (students).
 * Spring Framework 5:
   * Web
   * Data JPA
+  * Security
 * Vaadin 8
 * Java 8
 
