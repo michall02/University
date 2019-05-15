@@ -7,21 +7,23 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Qualifier;
+import pl.home.i18helper.I18Helper;
 import pl.home.ui.commons.UIComponentBuilder;
 import pl.home.ui.commons.UIComponentBuilderWithListener;
 import pl.home.ui.commons.UniversityMainUI;
 import pl.home.ui.students.SavedListener;
 import pl.home.ui.students.UITableRefresher;
 
-import static pl.home.utils.UniversityUtils.MAIN_MENU;
-import static pl.home.utils.UniversityUtils.SHOW_ALL_UNIVERSITIES;
-import static pl.home.utils.UniversityUtils.SHOW_STATS;
+import java.util.Locale;
 
 @SpringView(name = UniversityLayoutFactory.NAME, ui = UniversityMainUI.class)
 public class UniversityLayoutFactory extends VerticalLayout implements View, SavedListener {
     public static final String NAME = "operations";
 
     private TabSheet tabSheet;
+
+    private Locale locale = new Locale(UniversityMainUI.LOCALE);
+    private I18Helper i18Helper = new I18Helper(locale);
 
     private final UIComponentBuilderWithListener addUniversityComponentBuilder;
     private final UIComponentBuilder showAllUniversitiesComponentBuilder;
@@ -51,9 +53,9 @@ public class UniversityLayoutFactory extends VerticalLayout implements View, Sav
         tabSheet = new TabSheet();
         tabSheet.setWidth("100%");
 
-        tabSheet.addTab(addUniversityTab, MAIN_MENU.getValue());
-        tabSheet.addTab(showAllUniversitiesTab, SHOW_ALL_UNIVERSITIES.getValue());
-        tabSheet.addTab(showStatsTab, SHOW_STATS.getValue());
+        tabSheet.addTab(addUniversityTab, i18Helper.getMessage("menu.newUniversity"));
+        tabSheet.addTab(showAllUniversitiesTab, i18Helper.getMessage("menu.allUniversities"));
+        tabSheet.addTab(showStatsTab, i18Helper.getMessage("menu.stats"));
 
         addComponent(tabSheet);
     }

@@ -10,29 +10,17 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
+import pl.home.i18helper.I18Helper;
 import pl.home.models.Student;
 import pl.home.models.University;
 import pl.home.services.AddStudentService;
 import pl.home.services.ShowAllUniversitiesService;
 import pl.home.ui.commons.UIComponentBuilderWithListener;
+import pl.home.ui.commons.UniversityMainUI;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
-
-import static pl.home.models.Gender.FEMALE;
-import static pl.home.models.Gender.MALE;
-import static pl.home.models.Gender.OTHER;
-import static pl.home.utils.NotificationMessages.STUDENT_SAVE_INVALID_DESCRIPTION;
-import static pl.home.utils.NotificationMessages.STUDENT_SAVE_INVALID_TITLE;
-import static pl.home.utils.StudentUtils.AGE;
-import static pl.home.utils.StudentUtils.CLEAR;
-import static pl.home.utils.StudentUtils.FIRST_NAME;
-import static pl.home.utils.StudentUtils.GENDER;
-import static pl.home.utils.StudentUtils.LAST_NAME;
-import static pl.home.utils.StudentUtils.SAVE;
-import static pl.home.utils.StudentUtils.UNIVERSITY;
-
-
+import java.util.Locale;
 
 @org.springframework.stereotype.Component
 public class AddStudentMainLayoutFactory implements UIComponentBuilderWithListener {
@@ -49,6 +37,7 @@ public class AddStudentMainLayoutFactory implements UIComponentBuilderWithListen
 
         private Binder<Student> binderGroup;
         private Student student;
+        private I18Helper i18Helper;
 
         private SavedListener savedListener;
 
@@ -57,22 +46,25 @@ public class AddStudentMainLayoutFactory implements UIComponentBuilderWithListen
         }
 
         public AddStudentMainLayout init() {
+            Locale locale = new Locale(UniversityMainUI.LOCALE);
+            i18Helper = new I18Helper(locale);
+
             binderGroup = new Binder<>(Student.class);
             student = new Student();
 
-            firstName = new TextField(FIRST_NAME.getValue());
-            lastName = new TextField(LAST_NAME.getValue());
-            age = new TextField(AGE.getValue());
-            gender = new ComboBox<>(GENDER.getValue());
-            gender.setItems(MALE.getValue(), FEMALE.getValue(), OTHER.getValue());
+            firstName = new TextField(i18Helper.getMessage("student.firstName"));
+            lastName = new TextField(i18Helper.getMessage("student.lastName"));
+            age = new TextField(i18Helper.getMessage("student.age"));
+            gender = new ComboBox<>(i18Helper.getMessage("student.gender"));
+            gender.setItems(i18Helper.getMessage("gender.male"), i18Helper.getMessage("gender.female"), i18Helper.getMessage("gender.other"));
 
-            saveBtn = new Button(SAVE.getValue());
+            saveBtn = new Button(i18Helper.getMessage("button.save"));
             saveBtn.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 
-            universityComboBox = new ComboBox<>(UNIVERSITY.getValue());
+            universityComboBox = new ComboBox<>(i18Helper.getMessage("student.university"));
             universityComboBox.setWidth("100%");
 
-            clearBtn = new Button(CLEAR.getValue());
+            clearBtn = new Button(i18Helper.getMessage("button.clear"));
             clearBtn.setStyleName(ValoTheme.BUTTON_DANGER);
 
             saveBtn.addClickListener(this);
@@ -123,8 +115,8 @@ public class AddStudentMainLayoutFactory implements UIComponentBuilderWithListen
 
         private void save() throws ConstraintViolationException {
             if (universityComboBox.isEmpty() ) {
-                Notification.show(STUDENT_SAVE_INVALID_TITLE.getValue(),
-                        STUDENT_SAVE_INVALID_DESCRIPTION.getValue(),
+                Notification.show(i18Helper.getMessage("msg.errorTitle"),
+                        i18Helper.getMessage("msg.savedInvalidDescription"),
                         Notification.Type.WARNING_MESSAGE);
                 return;
             }
