@@ -4,7 +4,9 @@ import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Tree;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import org.springframework.security.core.context.SecurityContextHolder;
 import pl.home.i18helper.I18Helper;
 import pl.home.navigators.UniversityNavigator;
 
@@ -36,13 +38,15 @@ public class UniversityMenuLayoutFactory implements UIComponentBuilder {
 
             treeData.addItem(null, i18Helper.getMessage("menu.university"));
             treeData.addItem(null, i18Helper.getMessage("menu.student"));
+            treeData.addItem(null, i18Helper.getMessage("menu.logout"));
             treeData.addItem(i18Helper.getMessage("menu.university"), i18Helper.getMessage("menu.operations"));
             treeData.addItem(i18Helper.getMessage("menu.student"), i18Helper.getMessage("menu.addStudent"));
             treeData.addItem(i18Helper.getMessage("menu.student"), i18Helper.getMessage("menu.removeStudent"));
+            treeData.addItem(i18Helper.getMessage("menu.logout"), i18Helper.getMessage("menu.logoutBtn"));
 
             TreeDataProvider<String> stringTreeDataProvider = new TreeDataProvider<>(treeData);
             tree.setDataProvider(stringTreeDataProvider);
-            tree.expand(i18Helper.getMessage("menu.university"), i18Helper.getMessage("menu.student"));
+            tree.expand(i18Helper.getMessage("menu.university"), i18Helper.getMessage("menu.student"),i18Helper.getMessage("menu.logout"));
 
             addComponent(tree);
             return this;
@@ -53,6 +57,10 @@ public class UniversityMenuLayoutFactory implements UIComponentBuilder {
             String selectedItemPath = (String) itemClick.getItem();
             if (selectedItemPath == null) {
                 return;
+            }
+            if(selectedItemPath.equals(i18Helper.getMessage("menu.logoutBtn"))){
+                SecurityContextHolder.clearContext();
+                UI.getCurrent().getPage().setLocation("/login");
             }
 
             String path = selectedItemPath.toLowerCase().replaceAll(" ", "");

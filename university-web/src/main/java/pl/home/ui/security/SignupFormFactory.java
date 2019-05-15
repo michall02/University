@@ -45,12 +45,12 @@ public class SignupFormFactory implements UIComponentBuilder {
             passwordAgain = new PasswordField("password again");
 
             signupBtn.addClickListener(event -> {
-                if(passwordAgain.equals(password)){
+                if(passwordAgain.getValue().equals(password.getValue())){
                     registerUserService.save(username.getValue(),password.getValue());
                     Notification.show("Success","Account has create", Notification.Type.HUMANIZED_MESSAGE);
+                    UI.getCurrent().getPage().setLocation("/login");
                 }else{
                     Notification.show("Error","Your password are different", Notification.Type.ERROR_MESSAGE);
-                    UI.getCurrent().getPage().setLocation("/login");
                 }
             });
 
