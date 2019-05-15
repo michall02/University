@@ -5,9 +5,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
@@ -18,7 +16,6 @@ import pl.home.models.Student;
 import pl.home.services.RemoveStudentService;
 import pl.home.services.ShowAllStudentsService;
 import pl.home.ui.commons.UniversityMainUI;
-import pl.home.utils.StudentUtils;
 
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +34,7 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
 
     private TabSheet tabSheet;
 
-    private Locale locale = new Locale("pl");
+    private Locale locale = new Locale(UniversityMainUI.LOCALE);
     private I18Helper i18Helper = new I18Helper(locale);
 
     private final ShowAllStudentsService showAllStudentsService;
@@ -70,6 +67,8 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
 
         tabSheet.addTab(removeTab, i18Helper.getMessage("menu.remove"));
 
+
+
         addComponent(tabSheet);
 
     }
@@ -95,11 +94,7 @@ public class RemoveStudentLayoutFactory extends VerticalLayout implements View, 
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-
-        if(removeStudentTable  != null){
-            return;
-        }
-
+        if(removeStudentTable  != null){ return; }
         loadStudents();
         addLayout();
     }

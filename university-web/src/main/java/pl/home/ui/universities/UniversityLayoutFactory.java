@@ -16,15 +16,13 @@ import pl.home.ui.students.UITableRefresher;
 
 import java.util.Locale;
 
-import static pl.home.utils.UniversityUtils.SHOW_STATS;
-
 @SpringView(name = UniversityLayoutFactory.NAME, ui = UniversityMainUI.class)
 public class UniversityLayoutFactory extends VerticalLayout implements View, SavedListener {
     public static final String NAME = "operations";
 
     private TabSheet tabSheet;
 
-    private Locale locale = new Locale("pl");
+    private Locale locale = new Locale(UniversityMainUI.LOCALE);
     private I18Helper i18Helper = new I18Helper(locale);
 
     private final UIComponentBuilderWithListener addUniversityComponentBuilder;

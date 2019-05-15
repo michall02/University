@@ -10,12 +10,6 @@ import pl.home.navigators.UniversityNavigator;
 
 import java.util.Locale;
 
-import static pl.home.utils.MenuUtils.MENU_ADD_STUDENT;
-import static pl.home.utils.MenuUtils.MENU_OPERATIONS;
-import static pl.home.utils.MenuUtils.MENU_REMOVE_STUDENT;
-import static pl.home.utils.MenuUtils.MENU_STUDENT;
-import static pl.home.utils.MenuUtils.MENU_UNIVERSITY;
-
 @org.springframework.stereotype.Component
 public class UniversityMenuLayoutFactory implements UIComponentBuilder {
 
@@ -28,7 +22,7 @@ public class UniversityMenuLayoutFactory implements UIComponentBuilder {
 
 
         public UniversityMenu init() {
-            Locale locale = new Locale("pl");
+            Locale locale = new Locale(UniversityMainUI.LOCALE);
             i18Helper = new I18Helper(locale);
             tree = new Tree<>();
             treeData = new TreeData<>();

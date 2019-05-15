@@ -11,6 +11,7 @@ import pl.home.i18helper.I18Helper;
 import pl.home.models.University;
 import pl.home.services.AddUniversityService;
 import pl.home.ui.commons.UIComponentBuilderWithListener;
+import pl.home.ui.commons.UniversityMainUI;
 import pl.home.ui.students.SavedListener;
 
 import javax.validation.ConstraintViolationException;
@@ -40,7 +41,7 @@ public class AddUniversityLayoutFactory implements UIComponentBuilderWithListene
         }
 
         public AddUniversityLayout init(){
-            locale = new Locale("pl");
+            locale = new Locale(UniversityMainUI.LOCALE);
             i18Helper = new I18Helper(locale);
 
             binderGroup = new Binder<>(University.class);

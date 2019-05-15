@@ -14,9 +14,6 @@ import pl.home.ui.commons.UniversityMainUI;
 
 import java.util.Locale;
 
-import static pl.home.utils.StudentUtils.MAIN_MENU;
-import static pl.home.utils.StudentUtils.SHOW_ALL_STUDENTS;
-
 @SpringView(name = LayoutFactory.NAME, ui = UniversityMainUI.class)
 public class LayoutFactory extends VerticalLayout implements View, SavedListener {
     public static final String NAME = "addstudent" ;
@@ -34,8 +31,8 @@ public class LayoutFactory extends VerticalLayout implements View, SavedListener
     }
 
     private TabSheet tabSheet;
-    Locale locale = new Locale("pl");
-    I18Helper i18Helper = new I18Helper(locale);
+    private Locale locale = new Locale(UniversityMainUI.LOCALE);
+    private I18Helper i18Helper = new I18Helper(locale);
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {

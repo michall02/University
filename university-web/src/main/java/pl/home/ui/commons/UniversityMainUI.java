@@ -1,10 +1,12 @@
 package pl.home.ui.commons;
 
 
+import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringViewProvider;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
@@ -18,8 +20,8 @@ import pl.home.ui.students.LayoutFactory;
 
 @SpringUI(path = UniversityMainUI.NAME)
 public class UniversityMainUI extends UI {
-
     public static final String NAME = "/ui";
+    public static String LOCALE = "en";
 
     private final UIComponentBuilder logoComponentBuilder;
     private final UIComponentBuilder menuComponentBuilder;
@@ -60,14 +62,26 @@ public class UniversityMainUI extends UI {
         Component logo = logoComponentBuilder.createComponent();
         Component menu = menuComponentBuilder.createComponent();
 
+        Button pl = new Button("PL");
+        pl.addClickListener(e -> {
+            LOCALE = "pl";
+            Page.getCurrent().reload();
+        });
+        Button en = new Button("EN");
+        en.addClickListener(e -> {
+            LOCALE = "en";
+            Page.getCurrent().reload();
+        });
+        HorizontalLayout horizontalLayout = new HorizontalLayout(en,pl);
+        VerticalLayout verticalLayout = new VerticalLayout(menu,horizontalLayout);
 
-        uiLayout.addComponent(menu);
+        uiLayout.addComponent(verticalLayout);
         uiLayout.addComponent(changeTab);
 
         uiLayout.setComponentAlignment(changeTab, Alignment.TOP_CENTER);
-        uiLayout.setComponentAlignment(menu, Alignment.TOP_CENTER);
+        uiLayout.setComponentAlignment(verticalLayout, Alignment.TOP_CENTER);
 
-        uiLayout.setExpandRatio(menu, 1);
+        uiLayout.setExpandRatio(verticalLayout, 1);
         uiLayout.setExpandRatio(changeTab, 2);
 
         logoPanel.setContent(logo);
@@ -80,8 +94,6 @@ public class UniversityMainUI extends UI {
         rootLayout.setExpandRatio(contentPanel, 1);
 
         initNavigator();
-
-
 
         setContent(rootLayout);
     }
